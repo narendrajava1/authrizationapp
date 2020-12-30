@@ -7,12 +7,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.auth.model.SimpleGrantedAuthority;
 import com.auth.model.User;
@@ -24,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsManager {
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -66,5 +70,40 @@ public class UserService implements UserDetailsService {
 			});
 			simpleAuthritiesRepository.saveAll(grantedAuthorities);
 		}
+
+		@DeleteMapping("/deacviveTheUser")
+		@PreAuthorize("hasRole('ADMIN')")
+		public void deactiveTheUSer(@PathVariable String username) {
+			this.deleteUser(username);
+		}
+	@Override
+	public void createUser(UserDetails user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateUser(UserDetails user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUser(String username) {
+		userRepository.deleteByUsername(username);
+		
+	}
+
+	@Override
+	public void changePassword(String oldPassword, String newPassword) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean userExists(String username) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

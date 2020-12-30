@@ -10,6 +10,8 @@ import com.auth.model.User;
 public interface UserRepository extends CrudRepository<User, Long> {
 
 	List<User> findByUsername(String username);
+	
+	Long deleteByUsername(String username);
 
 //	Optional<User> findTopStartsWithByOrderByIdDesc(String id);
 
