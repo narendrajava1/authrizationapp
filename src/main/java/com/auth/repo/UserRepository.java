@@ -14,4 +14,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 //	Optional<User> findTopStartsWithByOrderByIdDesc(String id);
 
 //	List<User> findStartsWithByOrderByIdDesc(Long id);
+	Long deleteByUsername(String username);
 }
